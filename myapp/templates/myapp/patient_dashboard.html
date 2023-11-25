@@ -1,1 +1,12 @@
 <h1>Patient Dashboard</h1>
+<h2>Welcome, {{ user.username }}!</h2>
+  <p>Common information:</p>
+  <p>First Name: {{ user.first_name }}</p>
+  <p>Last Name: {{ user.last_name }}</p>
+  <p>email: {{ user.email }}</p>
+  <p>address_line1: {{ user.address_line1 }}</p>
+  <p>city: {{ user.city }}</p>
+  <p>state: {{ user.state }}</p>
+  <p>pincode: {{ user.pincode }}</p>
+  <h2>Profile picture </h2>
+  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px">

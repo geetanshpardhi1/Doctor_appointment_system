@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm,LoginForm
-from .models import PatientProfile, DoctorProfile
+from .models import PatientProfile, DoctorProfile,CustomUser
 
 def signup(request):
     if request.method == 'POST':
@@ -47,7 +47,9 @@ def user_login(request):
     return render(request, 'myapp/login.html', {'form': form})
 @login_required
 def patient_dash(request):
-    return render(request,'myapp/patient_dashboard.html')
+    user = CustomUser.objects.get(pk=request.user.pk)
+    return render(request,'myapp/patient_dashboard.html',{'user':user})
 @login_required
 def doctor_dash(request):
-    return render(request,'myapp/doctor_dashboard.html')
+    user = CustomUser.objects.get(pk=request.user.pk)
+    return render(request,'myapp/doctor_dashboard.html',{'user':user})
