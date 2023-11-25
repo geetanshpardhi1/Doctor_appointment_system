@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm,LoginForm
 from .models import PatientProfile, DoctorProfile,CustomUser
 
+def home(request):
+    return render(request,'myapp/home.html')
+
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
