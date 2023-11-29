@@ -6,8 +6,18 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'profile_picture', 'username', 'email', 'password1', 'password2','address_line1', 'city', 'state', 'pincode', 'user_role']
+        widgets = {
+            'password1': forms.PasswordInput,
+            'password2': forms.PasswordInput,
+        }
 
+   
     profile_picture = forms.ImageField(required=False)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = True
 
     def clean_email(self):
         email = self.cleaned_data['email']

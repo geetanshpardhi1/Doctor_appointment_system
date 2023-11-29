@@ -21,10 +21,10 @@
   <p>state: {{ user.state }}</p>
   <p>pincode: {{ user.pincode }}</p>
   <h2>Profile picture </h2>
-  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px">
+  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px"></br></br>
 
   <!-- Link to view the blog list -->
-  <a href="{% url 'blog_list' %}">View Blog</a>
+  <a href="{% url 'blog_list' %}">View Blog</a></br></br>
 
   <!-- Button to add a new blog post -->
   {% if user.is_doctor %}

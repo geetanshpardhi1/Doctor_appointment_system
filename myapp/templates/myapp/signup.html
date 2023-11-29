@@ -10,50 +10,34 @@
 </head>
 <body>
   {% block body %}
-  <div class="container">
-    <h2>Sign Up</h2>
-    <div class="card">
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label for="first_name">First Name:</label>
-        {{ form.first_name }}
-        <label for="last_name">Last Name:</label>
-        {{ form.last_name }}
-        <label for="email">Email:</label>
-        {{ form.email }}
-        <label for="password1">Password:</label>
-        {{ form.password1 }}
-        <label for="password2">Confirm Password:</label>
-        {{ form.password2 }}
-        <label for="profile_picture">Profile Picture:</label>
-        {{ form.profile_picture }}
-        <label for="username">Username:</label>
-        {{ form.username }}
-        <label for="address_line1">Address:</label>
-        {{ form.address_line1 }}
-        <label for="city">City:</label>
-        {{ form.city }}
-        <label for="state">State:</label>
-        {{ form.state }}
-        <label for="pincode">Pincode:</label>
-        {{ form.pincode }}
-        <label for="user_role">Role:</label>
-        <select id="user_role" name="user_role" required>
-          <option value="None">None</option>
-          <option value="patient">Patient</option>
-          <option value="doctor">Doctor</option>
-        </select>
+  <h2 style="text-align: center;">Sign Up</h2>
+  <div style="display: flex; justify-content:center; align-items:center; border:2px solid black;">
+ 
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+   
+    {{ form.first_name.label_tag }} {{ form.first_name }}</br>
+    {{ form.last_name.label_tag }} {{ form.last_name }}</br>
+    {{ form.email.label_tag }} {{ form.email }}</br>
+    {{ form.password1.label_tag }} {{ form.password1 }}</br>
+    {{ form.password2.label_tag }} {{ form.password2 }}</br>
+    {{ form.profile_picture.label_tag }} {{ form.profile_picture }}</br>
+    {{ form.username.label_tag }} {{ form.username }}</br>
+    {{ form.address_line1.label_tag }} {{ form.address_line1 }}</br>
+    {{ form.city.label_tag }} {{ form.city }}</br>
+    {{ form.state.label_tag }} {{ form.state }}</br>
+    {{ form.pincode.label_tag }} {{ form.pincode }}</br>
+    {{ form.user_role.label_tag }} {{ form.user_role }}</br>
+   
+    {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        The passwords do not match.
+      </div>
+    {% endif %}
 
-        {% if form.errors %}
-          <div class="alert alert-danger" role="alert">
-            The passwords do not match.
-          </div>
-        {% endif %}
-
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
   {% endblock %}
 </body>
 </html>

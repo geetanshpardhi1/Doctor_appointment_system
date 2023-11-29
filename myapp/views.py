@@ -53,7 +53,8 @@ def user_login(request):
 @login_required
 def patient_dash(request):
     user = CustomUser.objects.get(pk=request.user.pk)
-    return render(request,'myapp/patient_dashboard.html',{'user':user})
+    blog_posts = BlogPost.objects.filter(is_draft=False)
+    return render(request,'myapp/patient_dashboard.html',{'user':user,'blog_posts': blog_posts})
 @login_required
 def doctor_dash(request):
     user = CustomUser.objects.get(pk=request.user.pk)
