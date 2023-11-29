@@ -9,6 +9,7 @@ urlpatterns = [
     path('patient-dashboard/',views.patient_dash, name='patient_dashboard'),
     path('doctor-dashboard/', views.doctor_dash, name='doctor_dashboard'),
     path('blog/',views.blog_list, name='blog_list'),
+    path('myblog/',views.personal_blog_list, name='posted_blogs'),
     path('blog/add/',views.add_blog_post, name='add_blog_post'),
     path('logout/',LogoutView.as_view(template_name='myapp/logout.html'),name='logout'),
     path('blog/<int:blog_id>/', views.blog_detail, name='blog_detail'),

@@ -66,6 +66,7 @@ def blog_list(request):
     blog_posts = BlogPost.objects.filter(is_draft=False)
     return render(request, 'myapp/blog_list.html', {'blog_posts': blog_posts})
 
+
 #view to post blog
 def add_blog_post(request):
     if request.method == 'POST':
@@ -90,3 +91,9 @@ def doctor_draft_blogs(request):
     draft_blogs = BlogPost.objects.filter(author=request.user, is_draft=True)
 
     return render(request, 'myapp/draft_blogs.html', {'draft_blogs': draft_blogs})
+
+#view personal posted blogs
+def personal_blog_list(request):
+    # Fetch all published blog posts (not marked as draft)
+    blog_posts = BlogPost.objects.filter(author=request.user,is_draft=False)
+    return render(request, 'myapp/posted_blogs.html', {'blog_posts': blog_posts})
