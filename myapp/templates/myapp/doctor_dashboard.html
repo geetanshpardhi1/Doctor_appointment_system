@@ -10,3 +10,11 @@
   <p>pincode: {{ user.pincode }}</p>
   <h2>Profile picture </h2>
   <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px">
+
+  <!-- Link to view the blog list -->
+  <a href="{% url 'blog_list' %}">View Blog</a>
+
+  <!-- Button to add a new blog post -->
+  {% if user.is_doctor %}
+    <a href="{% url 'add_blog_post' %}">Add Blog Post</a>
+  {% endif %}

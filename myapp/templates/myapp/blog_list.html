@@ -1,0 +1,10 @@
+<h2>Blog Posts</h2>
+  {% for blog_post in blog_posts %}
+    <div>
+      <h3>{{ blog_post.title }}</h3>
+      <p>Category: {{ blog_post.category }}</p>
+      <p>Summary: {{ blog_post.truncated_summary }}</p>
+      <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}">
+      <p>Published by: {{ blog_post.author.username }} at {{ blog_post.publication_date }}</p>
+    </div>
+  {% endfor %}

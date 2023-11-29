@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import SignUpForm,LoginForm
-from .models import PatientProfile, DoctorProfile,CustomUser
+from .forms import SignUpForm,LoginForm,BlogPostForm
+from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost
 
 def home(request):
     return render(request,'myapp/home.html')
@@ -57,3 +57,23 @@ def patient_dash(request):
 def doctor_dash(request):
     user = CustomUser.objects.get(pk=request.user.pk)
     return render(request,'myapp/doctor_dashboard.html',{'user':user})
+
+#view for blog list
+def blog_list(request):
+    # Fetch all published blog posts (not marked as draft)
+    blog_posts = BlogPost.objects.filter(is_draft=False)
+    return render(request, 'myapp/blog_list.html', {'blog_posts': blog_posts})
+
+#view to post blog
+def add_blog_post(request):
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog_post = form.save(commit=False)
+            blog_post.author = CustomUser.objects.get(pk=request.user.pk)
+            blog_post.save()
+            return redirect('blog_list')
+    else:
+        form = BlogPostForm()
+    return render(request, 'myapp/add_blog_post.html', {'form': form})
+

@@ -29,3 +29,27 @@ class PatientProfile(models.Model):
 class DoctorProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
   
+#model for blogs
+class BlogPost(models.Model):
+    CATEGORY_CHOICES = [
+        ('Mental Health', 'Mental Health'),
+        ('Heart Disease', 'Heart Disease'),
+        ('Covid19', 'Covid19'),
+        ('Immunization', 'Immunization'),
+        # Add more categories as needed
+    ]
+
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='blog_images/', null=True, blank=True)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    summary = models.TextField()
+    content = models.TextField()
+    publication_date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    is_draft = models.BooleanField(default=False)
+
+    def truncated_summary(self):
+        return ' '.join(self.summary.split()[:15]) + '...' if len(self.summary.split()) > 15 else self.summary
+
+    def __str__(self):
+        return self.title
