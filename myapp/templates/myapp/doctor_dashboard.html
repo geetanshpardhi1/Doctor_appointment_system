@@ -1,5 +1,17 @@
-<h1>Doctor Dashboard</h1>
-<h2>Welcome, {{ user.username }}!</h2>
+{% extends 'myapp/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'path/to/base.css' %}">
+    <title>Patient Dashboard</title>
+</head>
+<body>
+    {% block body %}
+    <h1>Doctor Dashboard</h1>
+    <h2>Welcome, {{ user.username }}!</h2>
   <p>Common information:</p>
   <p>First Name: {{ user.first_name }}</p>
   <p>Last Name: {{ user.last_name }}</p>
@@ -18,3 +30,7 @@
   {% if user.is_doctor %}
     <a href="{% url 'add_blog_post' %}">Add Blog Post</a>
   {% endif %}
+    {% endblock %}
+</body>
+</html>
+  

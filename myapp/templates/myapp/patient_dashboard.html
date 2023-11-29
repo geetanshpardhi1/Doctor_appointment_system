@@ -1,20 +1,37 @@
-<h1>Patient Dashboard</h1>
-<h2>Welcome, {{ user.username }}!</h2>
-  <p>Common information:</p>
-  <p>First Name: {{ user.first_name }}</p>
-  <p>Last Name: {{ user.last_name }}</p>
-  <p>email: {{ user.email }}</p>
-  <p>address_line1: {{ user.address_line1 }}</p>
-  <p>city: {{ user.city }}</p>
-  <p>state: {{ user.state }}</p>
-  <p>pincode: {{ user.pincode }}</p>
-  <h2>Profile picture </h2>
-  <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px">
+{% extends 'myapp/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'path/to/base.css' %}">
+  <title>Patient Dashboard</title>
+</head>
+<body>
+  {% block body %}
+  <div class="container">
+    <h1>Patient Dashboard</h1>
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p>Common information:</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Address: {{ user.address_line1 }}</p>
+    <p>City: {{ user.city }}</p>
+    <p>State: {{ user.state }}</p>
+    <p>Pincode: {{ user.pincode }}</p>
+    <h2>Profile Picture </h2>
+    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="200px" height="200px">
 
-  <!-- Link to view the blog list -->
-  <a href="{% url 'blog_list' %}">View Blog</a>
+ 
+    <a href="{% url 'blog_list' %}">View Blog</a>
 
-  <!-- Button to add a new blog post -->
-  {% if user.is_doctor %}
-    <a href="{% url 'add_blog_post' %}">Add Blog Post</a>
-  {% endif %}
+
+    {% if user.is_doctor %}
+      <a href="{% url 'add_blog_post' %}">Add Blog Post</a>
+    {% endif %}
+  </div>
+  {% endblock %}
+</body>
+</html>
