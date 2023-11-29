@@ -1,6 +1,25 @@
-<h2>Add New Blog Post</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'path/to/base.css' %}">
+  <link rel="stylesheet" href="{% static 'path/to/blog_post_form.css' %}">
+  <title>Add New Blog Post</title>
+</head>
+<body>
+  {% block body %}
+  <div class="container">
+    <h2>Add New Blog Post</h2>
+    <form method="post" enctype="multipart/form-data" class="blog-post-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  {% endblock %}
+</body>
+</html>

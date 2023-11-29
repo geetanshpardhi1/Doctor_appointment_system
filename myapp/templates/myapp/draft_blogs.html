@@ -1,0 +1,32 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'path/to/base.css' %}">
+  <title>Draft Blogs</title>
+</head>
+<body>
+    {% block body %}
+  <div class="container">
+    <h2>Your Draft Blogs</h2></br>
+    <div style="border: 5px solid black ;">
+    {% for blog_post in draft_blogs %}
+      <div>
+        <h3 style="margin-bottom: 10px;"><a href="{% url 'blog_detail' blog_id=blog_post.id %}">{{ blog_post.title }}</a></h3>
+        <p>Category: {{ blog_post.category }}</p>
+        <p>Summary: {{ blog_post.truncated_summary }}</p>
+        <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}">
+        <p>Published by: {{ blog_post.author.username }} at {{ blog_post.publication_date }}</p>
+      </div>
+    
+    {% endfor %}
+
+    </div>  
+  </div>
+  {% endblock %}
+</body>
+</html>

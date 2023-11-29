@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm,LoginForm,BlogPostForm
 from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost
+
 
 def home(request):
     return render(request,'myapp/home.html')
@@ -77,3 +78,14 @@ def add_blog_post(request):
         form = BlogPostForm()
     return render(request, 'myapp/add_blog_post.html', {'form': form})
 
+#for detail view of each blog
+def blog_detail(request, blog_id):
+    blog_post = get_object_or_404(BlogPost, id=blog_id)
+    return render(request, 'myapp/blog_detail.html', {'blog_post': blog_post})
+
+#draft blogs
+def doctor_draft_blogs(request):
+
+    draft_blogs = BlogPost.objects.filter(author=request.user, is_draft=True)
+
+    return render(request, 'myapp/draft_blogs.html', {'draft_blogs': draft_blogs})
