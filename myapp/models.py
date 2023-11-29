@@ -36,7 +36,7 @@ class BlogPost(models.Model):
         ('Heart Disease', 'Heart Disease'),
         ('Covid19', 'Covid19'),
         ('Immunization', 'Immunization'),
-        # Add more categories as needed
+       #we can add more categories.
     ]
 
     title = models.CharField(max_length=255)
