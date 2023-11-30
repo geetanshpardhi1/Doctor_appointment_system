@@ -12,33 +12,38 @@
 </head>
 <body>
   {% block body %}
-  <div class="container" style=" max-width: 800px;
+  <div class="container" style="max-width: 800px;
   margin: auto;
   padding: 20px;">
-    <h2 style="color: #007bff;
+    <h2 class="category-title" style=" color: #007bff;
     text-align: center;">Blog Posts</h2>
-
-    {% for blog_post in blog_posts %}
-      <div  class="blog-card" style="
-      
-      height: 400px;
-      width: 400px;
-      border: 5px solid black;
-      border-radius: 8px;
+    {% for category in blog_posts_by_category %}
+      <div class="category-card" style="border: 1px solid #ccc;
+      padding: 10px;
       margin-bottom: 20px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <h3 style="margin-bottom: 10px;"><a href="{% url 'blog_detail' blog_id=blog_post.id %}">{{ blog_post.title }}</a></h3>
-        <p>Category: {{ blog_post.category }}</p>
-        <p>Summary: {{ blog_post.truncated_summary }}</p>
-        <img src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}" style="  height: 150px;
-        width: 200px;
-        border-radius: 4px;
-        margin-top: 10px;">
-        <p class="published-info" style=" color: #777;">Published by: {{ blog_post.author.username }} at {{ blog_post.publication_date }}</p>
+      background-color: #f8f9fa;">
+        <h3>{{ category.category }}</h3>
+        <ul>
+          {% for blog_post in blog_posts %}
+            {% if blog_post.category == category.category %}
+              <li class="blog-card" style=" border: 1px solid #ddd;
+              padding: 10px;
+              margin-top: 10px;
+              background-color: #fff;">
+              <h3 style="margin-bottom: 10px;"><a href="{% url 'blog_detail' blog_id=blog_post.id %}">{{ blog_post.title }}</a></h3>
+                <p class="blog-summary" style="margin-top: 10px;">Summary: {{ blog_post.truncated_summary }}</p>
+                <img style="max-width: 100%;
+                height: auto;
+                margin-top: 10px;" src="{{ blog_post.image.url }}" alt="{{ blog_post.title }}" class="blog-image">
+                <p class="blog-info" style="color: #555;
+                font-size: 12px;
+                margin-top: 5px;">Published by: {{ blog_post.author.username }} at {{ blog_post.publication_date }}</p>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
       </div>
     {% endfor %}
-
   </div>
   {% endblock %}
 </body>

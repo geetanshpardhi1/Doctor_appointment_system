@@ -19,7 +19,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-              {% if  user.is_authenticated and user.doctor %}
+              {% if  user.is_authenticated and user.is_doctor %}
               <a class="nav-link" href="{% url 'doctor_dashboard' %}">Dashboard</a>
               {% endif %}
               {% if  user.is_authenticated and user.is_patient %}
@@ -34,11 +34,14 @@
               {% endif %}
               {% if  user.is_authenticated and user.is_doctor %}
               <a class="nav-link" href="{% url 'add_blog_post' %}">Post Blogs</a>
-              <a class="nav-link" href="{% url 'posted_blogs' %}">View Posted blogs</a>
+              <a class="nav-link" href="{% url 'posted_blogs' %}">My blogs</a>
               <a class="nav-link" href="{% url 'draft_blogs' %}">View Draft blogs</a>
               {% endif %}
               {% if  user.is_authenticated and user.is_patient %}
               <a class="nav-link" href="{% url 'blog_list' %}">View blogs</a>
+              {% endif %}
+              {% if  user.is_authenticated and user.is_doctor %}
+              <a class="nav-link" href="{% url 'blog_list' %}">Community blogs</a>
               {% endif %}
               
             </div>

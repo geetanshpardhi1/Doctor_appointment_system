@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from .forms import SignUpForm,LoginForm,BlogPostForm
 from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost
 
@@ -54,7 +55,9 @@ def user_login(request):
 def patient_dash(request):
     user = CustomUser.objects.get(pk=request.user.pk)
     blog_posts = BlogPost.objects.filter(is_draft=False)
-    return render(request,'myapp/patient_dashboard.html',{'user':user,'blog_posts': blog_posts})
+    #for contexting them categorically
+    blog_posts_by_category = BlogPost.objects.filter(is_draft=False).values('category').annotate(count=Count('id'))
+    return render(request,'myapp/patient_dashboard.html',{'user':user,'blog_posts': blog_posts,'blog_posts_by_category': blog_posts_by_category})
 @login_required
 def doctor_dash(request):
     user = CustomUser.objects.get(pk=request.user.pk)
@@ -62,9 +65,10 @@ def doctor_dash(request):
 
 #view for blog list
 def blog_list(request):
-    # Fetch all published blog posts (not marked as draft)
     blog_posts = BlogPost.objects.filter(is_draft=False)
-    return render(request, 'myapp/blog_list.html', {'blog_posts': blog_posts})
+    #for contexting them categorically
+    blog_posts_by_category = BlogPost.objects.filter(is_draft=False).values('category').annotate(count=Count('id'))
+    return render(request, 'myapp/blog_list.html', {'blog_posts_by_category': blog_posts_by_category,'blog_posts': blog_posts})
 
 
 #view to post blog
@@ -75,7 +79,7 @@ def add_blog_post(request):
             blog_post = form.save(commit=False)
             blog_post.author = CustomUser.objects.get(pk=request.user.pk)
             blog_post.save()
-            return redirect('blog_list')
+            return redirect('posted_blogs')
     else:
         form = BlogPostForm()
     return render(request, 'myapp/add_blog_post.html', {'form': form})
@@ -94,6 +98,5 @@ def doctor_draft_blogs(request):
 
 #view personal posted blogs
 def personal_blog_list(request):
-    # Fetch all published blog posts (not marked as draft)
     blog_posts = BlogPost.objects.filter(author=request.user,is_draft=False)
     return render(request, 'myapp/posted_blogs.html', {'blog_posts': blog_posts})
