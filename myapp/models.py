@@ -58,7 +58,7 @@ class BlogPost(models.Model):
 class Appointment(models.Model):
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='patient_appointments')
     doctor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='doctor_appointments')
-    appointment_date = models.DateTimeField()
+    appointment_date = models.DateField()
     required_speciality = models.CharField(max_length=255)
     start_time = models.TimeField()
     end_time = models.TimeField(null=False)

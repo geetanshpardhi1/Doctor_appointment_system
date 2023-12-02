@@ -5,6 +5,7 @@ from django.db.models import Count
 from datetime import datetime, timedelta
 from .forms import SignUpForm,LoginForm,BlogPostForm,AppointmentForm
 from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost,Appointment
+from .google_calendars import create_calendar_event
 
 
 def home(request):
@@ -120,6 +121,16 @@ def book_appointment(request, doctor_id):
             appointment.patient = request.user
             appointment.doctor = doctor
             appointment.save()
+
+            # Call the function to create a calendar event
+            create_calendar_event(
+                doctor_email=doctor.email,
+                patient_name=request.user.get_full_name(),
+                appointment_date=str(appointment.appointment_date),
+                start_time=str(appointment.start_time),
+                end_time=str(appointment.end_time)
+            )
+
             return redirect('appointment_confirmation', appointment_id=appointment.id)
     else:
         form = AppointmentForm()
@@ -131,6 +142,7 @@ def book_appointment(request, doctor_id):
 def appointment_confirmation(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
     return render(request, 'myapp/appointment_confirmation.html', {'appointment': appointment})
+
 
 @login_required
 def patient_appointments(request):
