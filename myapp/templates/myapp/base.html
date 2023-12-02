@@ -38,7 +38,9 @@
               <a class="nav-link" href="{% url 'draft_blogs' %}">View Draft blogs</a>
               {% endif %}
               {% if  user.is_authenticated and user.is_patient %}
-              <a class="nav-link" href="{% url 'blog_list' %}">View blogs</a>
+              <a class="nav-link" href="{% url 'doctor_list' %}">View Doctors</a>
+              <a class="nav-link" href="{% url 'patient_appointments' %}">Your Appointments</a>
+              <a class="nav-link" href="{% url 'blog_list' %}">Community blogs</a>
               {% endif %}
               {% if  user.is_authenticated and user.is_doctor %}
               <a class="nav-link" href="{% url 'blog_list' %}">Community blogs</a>

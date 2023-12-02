@@ -1,0 +1,25 @@
+{% extends 'myapp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Confirmation</title>
+</head>
+<body>
+    {% block body %}
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Appointment Confirmation</h2>
+        <div class="appointment-details" style="background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <p style="margin-bottom: 10px;"><strong>Doctor's Name:</strong> {{ appointment.doctor.get_full_name }}</p>
+            <p style="margin-bottom: 10px;"><strong>Appointment Date:</strong> {{ appointment.appointment_date|date:"F j, Y" }}</p>
+            <p style="margin-bottom: 10px;"><strong>Appointment Start Time:</strong> {{ appointment.start_time }}</p>
+            <p style="margin-bottom: 10px;"><strong>Appointment End Time:</strong> {{ appointment.end_time }}</p>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

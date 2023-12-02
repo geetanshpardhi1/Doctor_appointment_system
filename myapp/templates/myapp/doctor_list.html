@@ -1,0 +1,27 @@
+{% extends 'myapp/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block body  %}
+    <h2>List of Doctors</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for doctor in doctors %}
+            <div class="col ">
+                <div class="card">
+                    <img src="{{ doctor.profile_picture.url }}" height="200px" class="card-img-top" alt="{{ doctor.username }} profile picture">
+                    <div class="card-body">
+                        <h5 class="card-title">Dr. {{ doctor.get_full_name }}</h5>
+                        <a href="{% url 'book_appointment' doctor.id %}" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</body>
+</html>

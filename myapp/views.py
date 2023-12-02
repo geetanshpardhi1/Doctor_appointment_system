@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from .forms import SignUpForm,LoginForm,BlogPostForm
-from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost
+from datetime import datetime, timedelta
+from .forms import SignUpForm,LoginForm,BlogPostForm,AppointmentForm
+from .models import PatientProfile, DoctorProfile,CustomUser,BlogPost,Appointment
 
 
 def home(request):
@@ -100,3 +101,39 @@ def doctor_draft_blogs(request):
 def personal_blog_list(request):
     blog_posts = BlogPost.objects.filter(author=request.user,is_draft=False)
     return render(request, 'myapp/posted_blogs.html', {'blog_posts': blog_posts})
+
+#view for listing all doctors
+@login_required
+def doctor_list(request):
+    doctors = CustomUser.objects.filter(user_role='doctor')
+    return render(request, 'myapp/doctor_list.html', {'doctors': doctors})
+
+#view for book appointment
+@login_required
+def book_appointment(request, doctor_id):
+    doctor = get_object_or_404(CustomUser, id=doctor_id, user_role='doctor')
+
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.patient = request.user
+            appointment.doctor = doctor
+            appointment.save()
+            return redirect('appointment_confirmation', appointment_id=appointment.id)
+    else:
+        form = AppointmentForm()
+
+    return render(request, 'myapp/book_appointment.html', {'form': form, 'doctor': doctor})
+
+#view for seeing appointments for patient user only
+@login_required
+def appointment_confirmation(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id, patient=request.user)
+    return render(request, 'myapp/appointment_confirmation.html', {'appointment': appointment})
+
+@login_required
+def patient_appointments(request):
+    user = request.user
+    appointments = Appointment.objects.filter(patient=user)
+    return render(request, 'myapp/patient_appointments.html', {'appointments': appointments})

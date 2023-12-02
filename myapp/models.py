@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from datetime import datetime, timedelta,date,time
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
@@ -53,3 +54,20 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Appointment(models.Model):
+    patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='patient_appointments')
+    doctor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='doctor_appointments')
+    appointment_date = models.DateTimeField()
+    required_speciality = models.CharField(max_length=255)
+    start_time = models.TimeField()
+    end_time = models.TimeField(null=False)
+    
+    #it calculate and set the end time when saving the appointment
+    def save(self, *args, **kwargs):
+        
+        self.end_time = (datetime.combine(date.today(), self.start_time) + timedelta(minutes=45)).time()
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.patient.username} - {self.doctor.username} - {self.appointment_date}"

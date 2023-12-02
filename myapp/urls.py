@@ -14,4 +14,8 @@ urlpatterns = [
     path('logout/',LogoutView.as_view(template_name='myapp/logout.html'),name='logout'),
     path('blog/<int:blog_id>/', views.blog_detail, name='blog_detail'),
     path('doctor/draft-blogs/', views.doctor_draft_blogs, name='draft_blogs'),
+    path('doctors/', views.doctor_list, name='doctor_list'),
+    path('appointments/book/<int:doctor_id>/', views.book_appointment, name='book_appointment'),
+    path('patient/appointments/', views.patient_appointments, name='patient_appointments'),
+     path('appointments/confirmation/<int:appointment_id>/', views.appointment_confirmation, name='appointment_confirmation'),
 ]

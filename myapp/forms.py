@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser,BlogPost
+from .models import CustomUser,BlogPost,Appointment
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -45,3 +45,14 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = ['title', 'image', 'category', 'summary', 'content', 'is_draft']
+        
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['required_speciality', 'appointment_date', 'start_time']
+        
+        widgets = {
+        'appointment_date': forms.TextInput(attrs={'type': 'date'}),
+        'start_time': forms.TextInput(attrs={'type': 'time'}),
+    }
